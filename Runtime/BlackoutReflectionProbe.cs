@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -7,28 +6,13 @@ namespace UnityEssentials
     [ExecuteAlways]
     public class BlackoutReflectionProbe : MonoBehaviour
     {
-        private float _blend = 1.0f;
+        private const float Blend = 1.0f;
 
         private ReflectionProbe _probe;
         private static Cubemap _blackCubemap;
 
         private Vector3 _lastScale;
         private float _lastBlend;
-
-        [MenuItem("GameObject/Light/Blackout Reflection Probe", false)]
-        private static void InstantiateBlackoutReflectionProbe(MenuCommand menuCommand)
-        {
-            var go = new GameObject("Blackout Reflection Probe");
-            go.transform.localScale = Vector3.one * 10f; // Default scale
-
-            var probe = go.AddComponent<BlackoutReflectionProbe>();
-
-#if UNITY_EDITOR
-            GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
-            Undo.RegisterCreatedObjectUndo(go, "Create Blackout Reflection Probe");
-            Selection.activeObject = go;
-#endif
-        }
 
         private void OnEnable()
         {
@@ -53,10 +37,10 @@ namespace UnityEssentials
         {
             if (_probe == null ||
                 _lastScale != transform.localScale ||
-                _lastBlend != _blend)
+                _lastBlend != Blend)
             {
                 _lastScale = transform.localScale;
-                _lastBlend = _blend;
+                _lastBlend = Blend;
 
                 OnDisable();
                 EnsureProbe();
@@ -83,7 +67,7 @@ namespace UnityEssentials
             _probe.transform.localPosition = Vector3.zero;
             _probe.transform.localRotation = Quaternion.identity;
 
-            _probe.blendDistance = _blend;
+            _probe.blendDistance = Blend;
             _probe.size = transform.localScale;
 
             _probe.refreshMode = ReflectionProbeRefreshMode.OnAwake;
