@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnityEssentials
 {
-    public class BlackoutReflectionProbeEditor
+    public class BlackoutReflectionProbePrefabSpawner
     {
         [MenuItem("GameObject/Essentials/Blackout Reflection Probe", false, priority = 122)]
         private static void InstantiateBlackoutReflectionProbe(MenuCommand menuCommand)
