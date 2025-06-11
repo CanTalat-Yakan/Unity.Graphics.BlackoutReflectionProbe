@@ -6,6 +6,14 @@ namespace UnityEssentials
     [ExecuteAlways]
     public class BlackoutReflectionProbe : MonoBehaviour
     {
+        [Info(MessageType.Info)]
+        [SerializeField]
+        private string _info =
+            "This component creates a hidden reflection probe that captures a black cubemap. " +
+            "It is useful for preventing unwanted reflections in scenes where no reflections are desired.";
+
+        [SerializeField] private bool _hideReflectionProbe = true;
+
         private const float Blend = 1.0f;
 
         private ReflectionProbe _probe;
@@ -20,42 +28,59 @@ namespace UnityEssentials
             ApplySettings();
         }
 
-        private void OnDisable()
+        private void OnDisable() =>
+            Cleanup();
+
+#if UNITY_EDITOR
+        private void OnValidate() =>
+            ApplySettings();
+#endif
+
+        private void Update()
+        {
+            if (_probe != null)
+                _probe.gameObject.hideFlags = _hideReflectionProbe ? HideFlags.HideInHierarchy : HideFlags.None;
+
+            if (_lastScale != transform.localScale ||
+                _lastBlend != Blend)
+            {
+                Cleanup();
+                EnsureProbe();
+                ApplySettings();
+            }
+
+            _lastScale = transform.localScale;
+            _lastBlend = Blend;
+        }
+
+        private void Cleanup()
         {
             if (_probe == null)
                 return;
 
             if (Application.isEditor)
-                DestroyImmediate(_probe.gameObject);
-            else Destroy(_probe.gameObject);
-        }
+                for (int i = 0; i <= transform.childCount; i++)
+                    DestroyImmediate(transform.GetChild(0).gameObject);
+            else for (int i = 0; i <= transform.childCount; i++)
+                    Destroy(transform.GetChild(0).gameObject);
 
-        private void OnValidate() =>
-            ApplySettings();
+            // Force Unity to update reflections
+            DynamicGI.UpdateEnvironment();
 
-        private void Update()
-        {
-            if (_probe == null ||
-                _lastScale != transform.localScale ||
-                _lastBlend != Blend)
-            {
-                _lastScale = transform.localScale;
-                _lastBlend = Blend;
+#if UNITY_EDITOR
+            UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+#endif
 
-                OnDisable();
-                EnsureProbe();
-                ApplySettings();
-            }
+            _probe = null;
         }
 
         private void EnsureProbe()
         {
             if (_probe == null)
             {
-                var go = new GameObject("BlackoutReflectionProbe (Hidden)");
-                go.hideFlags = HideFlags.HideInHierarchy;
+                var go = new GameObject("Blackout Reflection Probe", typeof(ReflectionProbe));
                 go.transform.SetParent(transform, false);
-                _probe = go.AddComponent<ReflectionProbe>();
+                _probe = go.GetComponent<ReflectionProbe>();
             }
         }
 
