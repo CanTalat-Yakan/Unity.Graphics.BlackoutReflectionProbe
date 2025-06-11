@@ -69,7 +69,8 @@ namespace UnityEssentials
             DynamicGI.UpdateEnvironment();
 
 #if UNITY_EDITOR
-            UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
+            if (!Application.isPlaying)
+                UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
 #endif
 
             _probe = null;
