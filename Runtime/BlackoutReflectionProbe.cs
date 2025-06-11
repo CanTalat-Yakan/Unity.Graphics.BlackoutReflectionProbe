@@ -9,8 +9,9 @@ namespace UnityEssentials
         [Info(MessageType.Info)]
         [SerializeField]
         private string _info =
-            "This component creates a hidden reflection probe that captures a black cubemap. " +
-            "It is useful for preventing unwanted reflections in scenes where no reflections are desired.";
+            "This component creates a hidden reflection probe that captures a black cubemap.\n" +
+            "It is useful for preventing unwanted reflections in scenes where no reflections are desired.\n\n" +
+            "The scale of the transform defines the dimensions of the reflection probe's bounding box.";
 
         [SerializeField] private bool _hideReflectionProbe = true;
 
