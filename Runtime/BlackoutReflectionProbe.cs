@@ -18,7 +18,7 @@ namespace UnityEssentials
         private const float Blend = 1.0f;
 
         private ReflectionProbe _probe;
-        private static Cubemap _blackCubemap;
+        private Cubemap _blackCubemap;
 
         private Vector3 _lastScale;
         private float _lastBlend;
@@ -91,6 +91,8 @@ namespace UnityEssentials
             if (_probe == null)
                 return;
 
+            _probe.gameObject.hideFlags = HideFlags.HideInHierarchy;
+
             _probe.transform.localPosition = Vector3.zero;
             _probe.transform.localRotation = Quaternion.identity;
 
@@ -99,6 +101,7 @@ namespace UnityEssentials
 
             _probe.refreshMode = ReflectionProbeRefreshMode.OnAwake;
             _probe.mode = ReflectionProbeMode.Custom;
+
             _probe.customBakedTexture = _blackCubemap ??= CreateBlackCubemap();
         }
 
@@ -115,7 +118,7 @@ namespace UnityEssentials
                 cubemap.SetPixels(blackPixels, face);
             }
             cubemap.Apply();
-            cubemap.hideFlags = HideFlags.HideInHierarchy;
+            //cubemap.hideFlags = HideFlags.HideInHierarchy;
             return cubemap;
         }
     }
