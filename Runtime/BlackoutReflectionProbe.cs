@@ -59,11 +59,7 @@ namespace UnityEssentials
             if (_probe == null)
                 return;
 
-            if (Application.isEditor)
-                for (int i = 0; i <= transform.childCount; i++)
-                    DestroyImmediate(transform.GetChild(0).gameObject);
-            else for (int i = 0; i <= transform.childCount; i++)
-                    Destroy(transform.GetChild(0).gameObject);
+            DestroyAllChildren();
 
             // Force Unity to update reflections
             DynamicGI.UpdateEnvironment();
@@ -74,6 +70,14 @@ namespace UnityEssentials
 #endif
 
             _probe = null;
+        }
+
+        private void DestroyAllChildren()
+        {
+            while (transform.childCount > 0)
+                if (Application.isEditor)
+                    DestroyImmediate(transform.GetChild(0).gameObject);
+                else Destroy(transform.GetChild(0).gameObject);
         }
 
         private void EnsureProbe()
