@@ -2,7 +2,8 @@
     "name": "UnityEssentials.BlackoutReflectionProbe.Editor",
     "rootNamespace": "UnityEssentials",
     "references": [
-        "UnityEssentials.BlackoutReflectionProbe"
+        "UnityEssentials.BlackoutReflectionProbe",
+        "UnityEssentials.InfoAttribute"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
