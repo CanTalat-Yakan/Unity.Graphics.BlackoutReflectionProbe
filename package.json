@@ -1,7 +1,7 @@
 {
-  "name": "com.unityessentials.blackoutreflectionprobe",
-  "version": "1.0.0",
-  "displayName": "Unity Graphics BlackoutReflectionProbe",
+  "name": "com.unityessentials.graphics.blackoutreflectionprobe",
+  "version": "2.0.0",
+  "displayName": "Graphics BlackoutReflectionProbe",
   "description": "This is a part of the UnityEssentials Ecosystem",
   "unity": "6000.0",
   "unityRelease": "",
