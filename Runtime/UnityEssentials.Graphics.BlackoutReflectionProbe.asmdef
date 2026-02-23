@@ -1,9 +1,8 @@
 {
-    "name": "UnityEssentials.BlackoutReflectionProbe.Editor",
+    "name": "UnityEssentials.Graphics.BlackoutReflectionProbe",
     "rootNamespace": "UnityEssentials",
     "references": [
-        "UnityEssentials.BlackoutReflectionProbe",
-        "UnityEssentials.InfoAttribute"
+        "GUID:882b7c953099bf44b8175faa8bfec00a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
